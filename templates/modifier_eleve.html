@@ -40,7 +40,7 @@
             <select name="choix_1" style="width:100%; padding: 8px;">
                 <option value="">-- Aucun --</option>
                 {% for etab in etablissements %}
-                    <option value="{{ etab.id_etab }}" {% if eleve.choix[0] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
+                    <option value="{{ etab.id_etab }}" {% if eleve.choix|length > 0 and eleve.choix[0] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -49,7 +49,7 @@
             <select name="choix_2" style="width:100%; padding: 8px;">
                 <option value="">-- Aucun --</option>
                 {% for etab in etablissements %}
-                    <option value="{{ etab.id_etab }}" {% if len(eleve.choix) > 1 and eleve.choix[1] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
+                    <option value="{{ etab.id_etab }}" {% if eleve.choix|length > 1 and eleve.choix[1] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -58,7 +58,7 @@
             <select name="choix_3" style="width:100%; padding: 8px;">
                 <option value="">-- Aucun --</option>
                 {% for etab in etablissements %}
-                    <option value="{{ etab.id_etab }}" {% if len(eleve.choix) > 2 and eleve.choix[2] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
+                    <option value="{{ etab.id_etab }}" {% if eleve.choix|length > 2 and eleve.choix[2] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
                 {% endfor %}
             </select>
         </div>

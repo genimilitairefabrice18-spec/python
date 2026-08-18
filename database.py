@@ -141,15 +141,14 @@ def modifier_eleve(matricule, nom, prenom, date_naissance, sexe, moyenne, etab_o
 def modifier_etablissement(id_etab, nom, type_etab, localite, capacite):
     conn = get_connection()
     cursor = conn.cursor()
-    # On met à jour la capacité et ajuste les places restantes
     cursor.execute('''
         UPDATE etablissements
-        SET code = ?,nom = ?, type_etab = ?, localite = ?, capacite = ?, places_restantes = ?
+        SET nom = ?, type_etab = ?, localite = ?, capacite = ?, places_restantes = ?
         WHERE id_etab = ?
-    ''', (code, nom, type_etab, localite, capacite, capacite, id_etab))
+    ''', (nom, type_etab, localite, capacite, capacite, id_etab))
     conn.commit()
     conn.close()
-
+    
 def obtenir_eleve_par_matricule(matricule):
     conn = get_connection()
     cursor = conn.cursor()

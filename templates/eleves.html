@@ -34,14 +34,14 @@
             {% endfor %}
         </select>
 
-        <select name="choix_3" style="padding: 8px; grid-column: span 2;">
+        <select name="choix_3" style="padding: 8px;">
             <option value="">-- Choix 3 --</option>
             {% for etab in etablissements %}
                 <option value="{{ etab.id_etab }}">{{ etab.nom }}</option>
             {% endfor %}
         </select>
 
-        <button type="submit" class="btn btn-purple" style="grid-column: span 1;">Enregistrer</button>
+        <button type="submit" class="btn btn-purple" style="grid-column: span 3; margin-top: 5px;">Enregistrer l'élève</button>
     </form>
 </div>
 
@@ -55,7 +55,7 @@
                 <th>Moyenne</th>
                 <th>Statut</th>
                 <th>Affectation</th>
-                <th>Action</th> <!-- NOUVELLE COLONNE ICI -->
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -71,15 +71,14 @@
                         <span class="status-tag status-non">NON AFFECTÉ</span>
                     {% endif %}
                 </td>
-                <td>{{ eleve.affectation if eleve.affectation else '-' }}</td>
-                
-                <!-- NOUVEAU BOUTON DE SUPPRESSION ICI -->
                 <td>
-                    <form action="/eleves/supprimer/{{ eleve.matricule }}" method="POST" style="margin:0;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet élève ?');">
-                        <button type="submit" style="background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-weight:bold;">✖ Supprimer</button>
-                    </form>
+                    {% if eleve.affectation %}
+                        {{ etab_dict.get(eleve.affectation, eleve.affectation) }}
+                    {% else %}
+                        -
+                    {% endif %}
                 </td>
-
+                
                 <td style="display: flex; gap: 5px;">
                     <a href="/eleves/modifier/{{ eleve.matricule }}" style="background:#f59e0b; color:white; padding:5px 8px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:bold;">✏️ Modifier</a>
                     <form action="/eleves/supprimer/{{ eleve.matricule }}" method="POST" style="margin:0;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet élève ?');">

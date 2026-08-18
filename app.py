@@ -85,9 +85,10 @@ def supprimer_etablissement_route(id_etab):
     return redirect(url_for("page_etablissements"))
 
 # --- ROUTE MODIFIER ÉLÈVE ---
-@app.route("/eleves/modifier/<matricule>", methods=["GET", "POST"])
-def modifier_eleve_route(matricule):
+@app.route("/eleves", methods=["GET", "POST"])
+def page_eleves():
     if request.method == "POST":
+        matricule = request.form.get("matricule")
         nom = request.form.get("nom")
         prenom = request.form.get("prenom")
         date_naissance = request.form.get("date_naissance")
@@ -100,14 +101,17 @@ def modifier_eleve_route(matricule):
         choix_3 = request.form.get("choix_3")
         choix = [c for c in [choix_1, choix_2, choix_3] if c]
 
-        database.modifier_eleve(matricule, nom, prenom, date_naissance, sexe, moyenne, etab_origine, choix)
-        flash("Élève modifié avec succès !", "success")
+        database.ajouter_eleve(matricule, nom, prenom, date_naissance, sexe, moyenne, etab_origine, choix)
+        flash("Élève ajouté avec succès !", "success")
         return redirect(url_for("page_eleves"))
 
-    eleve = database.obtenir_eleve_par_matricule(matricule)
+    eleves = database.obtenir_tous_eleves()
     etablissements = database.obtenir_tous_etablissements()
-    return render_template("modifier_eleve.html", eleve=eleve, etablissements=etablissements)
+    
+    # Création d'un dictionnaire {id_etab: nom_etab} pour une recherche facile dans le HTML
+    etab_dict = {etab['id_etab']: etab['nom'] for etab in etablissements}
 
+    return render_template("eleves.html", eleves=eleves, etablissements=etablissements, etab_dict=etab_dict)
 
 # --- ROUTE MODIFIER ÉTABLISSEMENT ---
 @app.route("/etablissements/modifier/<id_etab>", methods=["GET", "POST"])
