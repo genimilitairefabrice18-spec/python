@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="banner-orange">
+    <span>MODIFIER L'ÉLÈVE : {{ eleve.matricule }}</span>
+</div>
+
+<div class="card">
+    <form action="/eleves/modifier/{{ eleve.matricule }}" method="POST" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+        <div>
+            <label>Nom :</label>
+            <input type="text" name="nom" value="{{ eleve.nom }}" required style="width:100%; padding: 8px;">
+        </div>
+        <div>
+            <label>Prénom :</label>
+            <input type="text" name="prenom" value="{{ eleve.prenom }}" required style="width:100%; padding: 8px;">
+        </div>
+        <div>
+            <label>Date de Naissance :</label>
+            <input type="date" name="date_naissance" value="{{ eleve.date_naissance }}" style="width:100%; padding: 8px;">
+        </div>
+        <div>
+            <label>Sexe :</label>
+            <select name="sexe" style="width:100%; padding: 8px;">
+                <option value="M" {% if eleve.sexe == 'M' %}selected{% endif %}>Masculin</option>
+                <option value="F" {% if eleve.sexe == 'F' %}selected{% endif %}>Féminin</option>
+            </select>
+        </div>
+        <div>
+            <label>Moyenne :</label>
+            <input type="number" step="0.01" name="moyenne" value="{{ eleve.moyenne }}" required style="width:100%; padding: 8px;">
+        </div>
+        <div>
+            <label>Établissement d'origine :</label>
+            <input type="text" name="etab_origine" value="{{ eleve.etab_origine }}" style="width:100%; padding: 8px;">
+        </div>
+
+        <div>
+            <label>Choix 1 :</label>
+            <select name="choix_1" style="width:100%; padding: 8px;">
+                <option value="">-- Aucun --</option>
+                {% for etab in etablissements %}
+                    <option value="{{ etab.id_etab }}" {% if eleve.choix[0] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label>Choix 2 :</label>
+            <select name="choix_2" style="width:100%; padding: 8px;">
+                <option value="">-- Aucun --</option>
+                {% for etab in etablissements %}
+                    <option value="{{ etab.id_etab }}" {% if len(eleve.choix) > 1 and eleve.choix[1] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label>Choix 3 :</label>
+            <select name="choix_3" style="width:100%; padding: 8px;">
+                <option value="">-- Aucun --</option>
+                {% for etab in etablissements %}
+                    <option value="{{ etab.id_etab }}" {% if len(eleve.choix) > 2 and eleve.choix[2] == etab.id_etab %}selected{% endif %}>{{ etab.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div style="grid-column: span 3; display:flex; gap:10px; margin-top:10px;">
+            <button type="submit" class="btn btn-purple">Enregistrer les Modifications</button>
+            <a href="/eleves" style="background:#94a3b8; color:white; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold;">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

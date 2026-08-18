@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="banner-orange">
+    <span>GESTION DES ÉTABLISSEMENTS</span>
+</div>
+
+<!-- FORMULAIRE D'AJOUT -->
+<div class="card" style="margin-bottom: 20px;">
+    <h3>Ajouter un Établissement</h3>
+    <form action="/etablissements" method="POST" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px;">
+        <input type="text" name="id_etab" placeholder="Code (ex: ETAB01)" required style="padding: 8px;">
+        <input type="text" name="nom" placeholder="Nom de l'établissement" required style="padding: 8px;">
+        <select name="type_etab" style="padding: 8px;">
+            <option value="Public">Public</option>
+            <option value="Privé">Privé</option>
+        </select>
+        <input type="text" name="localite" placeholder="Localité / Ville" required style="padding: 8px;">
+        <input type="number" name="capacite" placeholder="Capacité d'accueil" required style="padding: 8px;">
+        
+        <button type="submit" class="btn btn-purple">Enregistrer</button>
+    </form>
+</div>
+
+<!-- TABLEAU DE LA LISTE DES ÉTABLISSEMENTS -->
+<div class="table-card">
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Localité</th>
+                <th>Capacité</th>
+                <th>Places Restantes</th>
+                <th>Action</th> <!-- COLONNE DE SUPPRESSION -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for etab in etablissements %}
+            <tr>
+                <td>{{ etab.id_etab }}</td>
+                <td>{{ etab.nom }}</td>
+                <td>{{ etab.type_etab }}</td>
+                <td>{{ etab.localite }}</td>
+                <td>{{ etab.capacite }}</td>
+                <td><strong>{{ etab.places_restantes }}</strong></td>
+                
+                <!-- BOUTON DE SUPPRESSION -->
+                <td>
+                    <form action="/etablissements/supprimer/{{ etab.id_etab }}" method="POST" style="margin:0;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet établissement ?');">
+                        <button type="submit" style="background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-weight:bold;">✖ Supprimer</button>
+                    </form>
+                </td>
+
+                <td style="display: flex; gap: 5px;">
+                    <a href="/etablissements/modifier/{{ etab.id_etab }}" style="background:#f59e0b; color:white; padding:5px 8px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:bold;">✏️ Modifier</a>
+                    <form action="/etablissements/supprimer/{{ etab.id_etab }}" method="POST" style="margin:0;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet établissement ?');">
+                        <button type="submit" style="background:#ef4444; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer; font-weight:bold; font-size:12px;">✖ Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

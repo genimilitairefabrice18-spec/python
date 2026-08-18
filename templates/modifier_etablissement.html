@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="banner-orange">
+    <span>MODIFIER L'ÉTABLISSEMENT : {{ etab.id_etab }}</span>
+</div>
+
+<div class="card">
+    <form action="/etablissements/modifier/{{ etab.id_etab }}" method="POST" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+        <div>
+            <label>Code :</label>
+            <input type="text" name="code" value="{{ etab.id_etab }}" required style="width:100%; padding: 8px;">
+        </div>
+
+        <div>
+            <label>Nom :</label>
+            <input type="text" name="nom" value="{{ etab.nom }}" required style="width:100%; padding: 8px;">
+        </div>
+        <div>
+            <label>Type :</label>
+            <select name="type_etab" style="width:100%; padding: 8px;">
+                <option value="Public" {% if etab.type_etab == 'Public' %}selected{% endif %}>Public</option>
+                <option value="Privé" {% if etab.type_etab == 'Privé' %}selected{% endif %}>Privé</option>
+            </select>
+        </div>
+        <div>
+            <label>Localité :</label>
+            <input type="text" name="localite" value="{{ etab.localite }}" required style="width:100%; padding: 8px;">
+        </div>
+        <div>
+            <label>Capacité d'accueil :</label>
+            <input type="number" name="capacite" value="{{ etab.capacite }}" required style="width:100%; padding: 8px;">
+        </div>
+
+        <div style="grid-column: span 2; display:flex; gap:10px; margin-top:10px;">
+            <button type="submit" class="btn btn-purple">Enregistrer les Modifications</button>
+            <a href="/etablissements" style="background:#94a3b8; color:white; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold;">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

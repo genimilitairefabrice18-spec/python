@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="banner-orange">
+    <span>TABLEAU DE BORD - AFFECTATION AUTOMATIQUE</span>
+    <form action="/lancer-affectation" method="POST" style="margin:0;">
+        <button type="submit" class="btn btn-purple">⚡ Lancer l'Affectation</button>
+    </form>
+</div>
+
+<div class="cards-grid">
+    <div class="card">
+        <h3>Total Élèves</h3>
+        <div class="number">{{ total_eleves }}</div>
+    </div>
+    <div class="card">
+        <h3>Établissements</h3>
+        <div class="number">{{ total_etab }}</div>
+    </div>
+    <div class="card">
+        <h3>Élèves Affectés</h3>
+        <div class="number" style="color: #16a34a;">{{ affectes }}</div>
+    </div>
+    <div class="card">
+        <h3>Non Affectés</h3>
+        <div class="number" style="color: #dc2626;">{{ non_affectes }}</div>
+    </div>
+</div>
+
+{% endblock %}

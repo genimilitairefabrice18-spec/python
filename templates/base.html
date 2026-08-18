@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ProScool | Gestion Scolaire</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">VOIR L'ESPACE ADMIN</div>
+        <ul class="sidebar-menu">
+            <li><a href="/" class="active">Tableau De Bord</a></li>
+            <li><a href="/eleves">Élèves</a></li>
+            <li><a href="/etablissements">Établissements</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="topbar">
+            <div class="topbar-title">ProScool : SYSTÈME DE GESTION DES AFFECTATIONS</div>
+            <div class="topbar-right">
+                <span>17 AOUT 2026</span>
+                <span class="badge-user">ADMIN</span>
+            </div>
+        </header>
+
+        <main class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div style="padding: 10px; margin-bottom: 15px; background: #e0e7ff; color: #3730a3; border-radius: 6px;">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+</body>
+</html>
